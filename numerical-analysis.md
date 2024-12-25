@@ -2,7 +2,7 @@
 
 求解$Ax=b$时，可以先将矩阵A分解为LU，原式变为$LUx=b$再另$Ux=y$将原式变换为$Ly=b$
 
-先求$y$再求$x$ 因为 ***doolittle*** 分解默认$L$的对角线元素均为1
+先求$y$再求$x$ 因为***doolittle***分解默认$L$的对角线元素均为1
 
 求解顺序：$U$第一行，$L$第一列，$U$第二行，$L$第二列，$U$第三行……
 
@@ -137,6 +137,10 @@ $$
 x_{k+1}=\varphi(x_k)
 $$
 
+**不动点迭代法的误差估计：**
+
+$$\begin{aligned}|x^*-x_k|&\leq\frac{L}{1-L}|x_k-x_{k-1}|\\
+&\leq\frac{L^k}{1-L}|x_1-x_0|\end{aligned}$$
 **收敛速度:**
 
 $$
@@ -167,6 +171,12 @@ $$
 
 $$
 x_{k+1}=x_k-\frac{f(x_k)}{f'(x_k)},k=0,1,2,\cdots
+$$
+
+**Newton迭代法的误差估计：**
+
+$$
+x_{k+1}-x^*=\frac{f''(\xi)}{f'(x_k)}(x_k-x^*)^2
 $$
 
 **例：**
@@ -260,40 +270,30 @@ $$
 4. **二元函数算术运算误差传播规律**
    
    **绝对误差限：**
-   
-   $$
-   \varepsilon(x_1^*\pm x_2^*)\approx
+   $$\begin{aligned}
+   &\varepsilon(x_1^*\pm x_2^*)\approx
 \varepsilon(x_1^*)+\varepsilon(x_2^*)
-   $$
-   
-   $$
-   \varepsilon(x_1^* x_2^*)\approx
+   \quad\\
+   &\varepsilon(x_1^* x_2^*)\approx
 |x_2^*|\varepsilon(x_1^*)+|x_1^*|\varepsilon(x_2^*)
-   $$
-   
-   $$
-   \varepsilon(\frac{x_1^*} {x_2^*})\approx
+   \quad\\
+   &\varepsilon(\frac{x_1^*} {x_2^*})\approx
 \frac{|x_2^*|\varepsilon(x_1^*)+|x_1^*|\varepsilon(x_2^*)}
 {|x_2^*|^2}\quad(x_2^*\neq0)
-   $$
+   \end{aligned}$$
+   **相对误差限：**
    
-   **相对误差限：（可能要考）**
-   
-   $$
-   \varepsilon_r(x_1^*+x_2^*)\approx max\{\varepsilon_r(x_1^*),
-\varepsilon_r(x_2^*)\}\quad(x_1^*x_2^*>0)
-   $$
-   
-   $$
-   \varepsilon_r(x_1^*x_2^*)\approx \varepsilon_r(x_1^*)+
-\varepsilon_r(x_2^*)\quad(x_1^*x_2^*\neq0)
-   $$
-   
-   $$
-   \varepsilon_r(\frac{x_1^*} {x_2^*})\approx
+   $$\begin{aligned}
+   &\varepsilon_r(x_1^*+x_2^*)\approx max\{\varepsilon_r(x_1^*),
+\varepsilon_r(x_2^*)\}\quad&(x_1^*x_2^*>0)
+   \\
+   &\varepsilon_r(x_1^*x_2^*)\approx \varepsilon_r(x_1^*)+
+\varepsilon_r(x_2^*)\quad&(x_1^*x_2^*\neq0)
+   \\
+   &\varepsilon_r(\frac{x_1^*} {x_2^*})\approx
 \varepsilon_r(x_1^*)+\varepsilon_r(x_2^*)
-\quad(x_1^*x_2^*\neq0)
-   $$
+\quad&(x_1^*x_2^*\neq0)
+   \end{aligned}$$
 
 **例1：**
 
@@ -348,13 +348,13 @@ $$
 
 能够写成如下格式：
 
-$$
+$$\begin{aligned}
 x_1^{(k+1)}=\frac{1}{a_{11}}(b_1-a_{12}x_2^{(k)}-a_{13}x_3^{(k)})\\
 \quad \\
 x_2^{(k+1)}=\frac{1}{a_{22}}(b_2-a_{21}x_1^{(k)}-a_{23}x_3^{(k)})\\
 \quad \\
 x_3^{(k+1)}=\frac{1}{a_{33}}(b_3-a_{31}x_1^{(k)}-a_{32}x_2^{(k)})\\
-$$
+\end{aligned}$$
 
 ### 2.Gauss-Seidel迭代法
 
@@ -365,13 +365,13 @@ $$
 
 能够写成如下格式：
 
-$$
-x_1^{(k+1)}=\frac{1}{a_{11}}(b_1-a_{12}x_2^{(k)}-a_{13}x_3^{(k)})\\
+$$\begin{aligned}
+x_1^{(k+1)}&=\frac{1}{a_{11}}(b_1-a_{12}x_2^{(k)}-a_{13}x_3^{(k)})\\
 \quad \\
-x_2^{(k+1)}=\frac{1}{a_{22}}(b_2-a_{21}x_1^{(k+1)}-a_{23}x_3^{(k)})\\
+x_2^{(k+1)}&=\frac{1}{a_{22}}(b_2-a_{21}x_1^{(k+1)}-a_{23}x_3^{(k)})\\
 \quad \\
-x_3^{(k+1)}=\frac{1}{a_{33}}(b_3-a_{31}x_1^{(k+1)}-a_{32}x_2^{(k+1)})\\
-$$
+x_3^{(k+1)}&=\frac{1}{a_{33}}(b_3-a_{31}x_1^{(k+1)}-a_{32}x_2^{(k+1)})\\
+\end{aligned}$$
 
 **Gauss-Seidel迭代法与Jacobi迭代法的区别：**
 
@@ -381,15 +381,17 @@ GS迭代法逐次更新变量，Jacobi迭代法完成一轮才更新变量。
 
 超松弛迭代法是由Gauss-Seidel迭代法改写得到的：
 
-$$
-(D+L)x_{k+1}=-Ux_k+b\\
+$$\begin{aligned}
+&(D+L)x_{k+1}=-Ux_k+b\\
 \quad \\
-x_{k+1}=(1-\omega)x_k+\omega[-(D+L)^{-1}Ux_k+(D+L)^{-1}b]\\
-or\\
-Dx_{k+1}+Lx_{k+1}=-Ux_k+b\\
+&x_{k+1}=(1-\omega)x_k+\omega[-(D+L)^{-1}Ux_k+(D+L)^{-1}b]\\
+\quad\\
+& \hspace{5cm} \text{or} \hspace{2cm} \\
+\quad\\
+&Dx_{k+1}+Lx_{k+1}=-Ux_k+b\\
 \quad \\
-Dx_{k+1}=(1-\omega)Dx_k+\omega(b-Lx_{k+1}-Ux_{k})
-$$
+&Dx_{k+1}=(1-\omega)Dx_k+\omega(b-Lx_{k+1}-Ux_{k})
+\end{aligned}$$
 
 即：
 
@@ -464,21 +466,15 @@ B_0=\frac{1}{12},B_1=-\frac{1}{12}.
    
    可以知道其有3次代数精度，因为当$f(x)=x^4$时，该求积公式不再准确。
 
-2. $$
-   E(f)=\int_0^1f(x)dx-[A_0f(0)+A_1f(1)+B_0f'(0)+B_1f'(1)]\\
-   $$
-   
-   $$
-   =\int_0^1f(x)dx-[A_0H_3(0)+A_1H_3(1)+B_0H_3'(0)+B_1H_3'(1)]（使用插值条件）
-   $$
-   
-   $$
-   =\int_0^1f(x)dx-\int_0^1H_3(x)dx=\int_0^1(f-H_3)dx（三次代数精度）
-   $$
-   
-   $$
-   =\int_0^1\frac{f^{(4)}(\xi)}{4!}x^2(x-1)^2dx=\frac{1}{720}f^{(4)}(\eta)（使用积分中值定理）
-   $$
+2. $$\begin{aligned}
+   E(f)&=\int_0^1f(x)dx-[A_0f(0)+A_1f(1)+B_0f'(0)+B_1f'(1)]
+  \\
+   &=\int_0^1f(x)dx-[A_0H_3(0)+A_1H_3(1)+B_0H_3'(0)+B_1H_3'(1)]\;(使用插值条件)
+  \\
+   &=\int_0^1f(x)dx-\int_0^1H_3(x)dx=\int_0^1(f-H_3)dx\;(三次代数精度)
+  \\
+   &=\int_0^1\frac{f^{(4)}(\xi)}{4!}x^2(x-1)^2dx=\frac{1}{720}f^{(4)}(\eta)\;(使用积分中值定理)
+   \end{aligned}$$
 
 ### 收敛性与稳定性
 
@@ -490,7 +486,7 @@ B_0=\frac{1}{12},B_1=-\frac{1}{12}.
 
 ### Newton-Cotes公式
 
-节点等间距分布的插值型求积公式即为**Newton-Cotes求积公式。**当$n\leq7$时，N-C公式是稳定的；$n\geq7$时则是不稳定的。
+节点等间距分布的插值型求积公式即为**Newton-Cotes求积公式。** 当$n\leq7$时，N-C公式是稳定的；$n\geq7$时则是不稳定的。
 
 对于$n+1$个节点的N-C公式，当$n$为奇数时，其代数精度至少为$n$次；n为偶数时，其代数精度至少为$n+1$次。
 
@@ -601,17 +597,13 @@ $$
 
 (1) 建立首项为1的正交多项式的前三项：(令$g_0=1$)
 
-$$
-(g_0,g_1)=\int_{-1}^1|x|g_0g_1dx=\int_{-1}^1|x|(x+a)dx=0
-$$
-
-$$
-(g_0,g_2)=\int_{-1}^1|x|g_0g_2dx=\int_{-1}^1|x|(x^2+bx+c)dx=0
-$$
-
-$$
-(g_1,g_2)=\int_{-1}^1|x|g_1g_2dx=\int_{-1}^1|x|(x+a)(x^2+bx+c)dx=0
-$$
+$$\begin{aligned}
+&(g_0,g_1)=\int_{-1}^1|x|g_0g_1dx=\int_{-1}^1|x|(x+a)dx=0
+\\
+&(g_0,g_2)=\int_{-1}^1|x|g_0g_2dx=\int_{-1}^1|x|(x^2+bx+c)dx=0
+\\
+&(g_1,g_2)=\int_{-1}^1|x|g_1g_2dx=\int_{-1}^1|x|(x+a)(x^2+bx+c)dx=0
+\end{aligned}$$
 
 可以解得$a=0,b=0,c=-\frac{1}{2},$所以$g_1=x,g_2=x^2-\frac{1}{2}$ 
 
@@ -702,12 +694,13 @@ $$
 
 3. 求余项的最大值：
    
-   $$
-   \max_{x\in[a,b]}|f(x)|=\max_{x\in[a,b]}|\frac{f''(x)}{2!}(x-a)(x-b)|\\
+   $$\begin{aligned}
+   \max_{x\in[a,b]}|f(x)|&=\max_{x\in[a,b]}|\frac{f''(x)}{2!}(x-a)(x-b)|\\
 \quad \\
-\leq \frac{1}{2}\max_{x\in[a,b]}|f''(x)|\frac{(b-a)^2}{4}\\
+&\leq \frac{1}{2}\max_{x\in[a,b]}|f''(x)|\frac{(b-a)^2}{4}\\
 \quad \\
-=\frac{(b-a)^2}{8}\max_{x\in[a,b]}|f''(x)|
-   $$
+&=\frac{(b-a)^2}{8}\max_{x\in[a,b]}|f''(x)|
+   \end{aligned}$$
    
    证毕。
+
